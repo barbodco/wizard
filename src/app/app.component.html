@@ -1,0 +1,47 @@
+<router-outlet></router-outlet>
+<div class="main-wrp">
+  <div
+    *ngIf="!reviewMode"
+  >
+    <app-stepper 
+      *ngFor="let item of [step1,step2,step3]" 
+      (activation)="goActivate($event);console.log($event)"
+      [stepDetails]="item"
+      [viewMode]="viewMode"
+      >    
+    </app-stepper>
+  </div>
+  <button 
+    class="review"
+    *ngIf="!reviewMode"
+    (click)="reviewMode = true"
+    >
+    Review
+  </button>
+  <div class="review-mode" *ngIf="reviewMode">
+    <div class="go-back" (click)="reviewMode = false">
+      <------
+    </div>
+    <h1>Basic Info</h1>
+    <div class="flash-wrp" *ngFor="let item of step1.details" >
+      <label for="">
+        <span>{{item.name}}: </span>
+        <span>{{item.value}}</span>
+      </label>
+    </div>
+    <h1>Address Info</h1>
+    <div class="flash-wrp" *ngFor="let item of step2.details" >
+      <label for="">
+        <span>{{item.name}}: </span>
+        <span>{{item.value}}</span>
+      </label>
+    </div>
+    <h1>Comments</h1>
+    <div class="flash-wrp" *ngFor="let item of step3.details" >
+      <label for="">
+        <span>{{item.name}}: </span>
+        <span>{{item.value}}</span>
+      </label>
+    </div>
+  </div>
+</div>

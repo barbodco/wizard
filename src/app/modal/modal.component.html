@@ -1,0 +1,35 @@
+<!-- <div class="close-modal">
+	X
+</div> -->
+<div class="step-wrp">
+	<div class="details">
+		<div class="loop" *ngFor="let item of details.details;let i = index">
+			<label [attr.for]="item.name" class="input-wrp" *ngIf="!viewMode && item.type !== 'select'">
+				<span class="label">
+					{{item.name}}
+				</span>
+				<input [(ngModel)]="item.value" [attr.name]="item.name" type="text" [attr.placeholder]="item.placeHolder">
+			</label>
+			<div class="viewMode" *ngIf="viewMode">
+				{{item.value}}
+			</div>
+		</div>
+		<div *ngIf="details.type === 'dropdown'" class="textarea">
+			<select *ngIf="!viewMode" [(ngModel)]="tmpModel" name="" id="">
+				<option *ngFor="let item of details.details;let i = index" [attr.value]="item.index-1">{{item.name}}</option>
+			</select>
+			<textarea *ngIf="!viewMode" [(ngModel)]="details.details[tmpModel].value" (input)="resetForm(details)"  name="textarea" id="" cols="30" rows="10">
+			</textarea>
+			<div class="viewMode" *ngIf="viewMode">
+				{{item.value}}
+			</div>
+		</div>
+		<button class="review" (click)="goCloseModal()">
+		  Submit Changes
+		</button>
+	</div>
+	<!-- <button (click)="viewMode = !viewMode">
+		viewMode
+	</button> -->
+	<br><br>
+</div>

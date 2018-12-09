@@ -1,0 +1,39 @@
+<div class="step-wrp">
+	<div class="head-wrp" (click)="emitStep(stepDetails.stepNumber)">
+		<app-modal (closeModal)="modal = $event" *ngIf="modal && stepDetails" [details]="stepDetails"></app-modal>
+		<div class="heads" *ngIf="stepDetails" 
+			[ngClass]="{'pending': stepDetails.status === 'pending','none': stepDetails.status === 'none','finished': stepDetails.status === 'finished','finished': finished}">
+			<div class="tit">
+				{{stepDetails.title}} <span *ngIf="checkIfCompleted(stepDetails.type === dropdown ? false : true) || finished" class="edit-step" (click)="modal = true">edit</span>
+			</div>
+			<div class="des">
+				{{stepDetails.description}}
+			</div>
+		</div>
+	</div>
+	<div *ngIf="stepDetails && stepDetails.active" class="details">
+		<div class="loop" *ngFor="let item of stepDetails.details;let i = index">
+			<label [attr.for]="item.name" class="input-wrp" *ngIf="!viewMode && item.type !== 'select'">
+				<span class="label">
+					{{item.name}}
+				</span>
+				<input [(ngModel)]="item.value" (input)="console.log(stepDetails)" [attr.name]="item.name" type="text" [attr.placeholder]="item.placeHolder">
+			</label>
+			<div class="viewMode" *ngIf="viewMode">
+				{{item.value}}
+			</div>
+		</div>
+		<div *ngIf="stepDetails.type === 'dropdown'" class="textarea">
+			<select *ngIf="!viewMode" (change)="tmpModel = $event.target.value" name="" id="">
+				<option *ngFor="let item of stepDetails.details;let i = index" [attr.value]="item.index-1">{{item.name}}</option>
+			</select>
+			<textarea *ngIf="!viewMode" [(ngModel)]="stepDetails.details[tmpModel].value"  name="textarea" id="" cols="30" rows="10">
+			</textarea>
+			<div class="viewMode" *ngIf="viewMode">
+				{{item.value}}
+			</div>
+		</div>
+			
+	</div>
+	<br><br>
+</div>
